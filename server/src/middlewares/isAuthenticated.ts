@@ -18,8 +18,8 @@ declare global {
 export default async (req: Request, res: Response, next: NextFunction) => {
   let token;
 
-  if (req.headers.authorization && req.headers.authorization.startsWith('Ivan')) {
-    token = req.headers.authorization.replace('Ivan ', '');
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.replace('Bearer ', '');
   }
 
   if (!token) {
