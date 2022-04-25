@@ -1,7 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
-import { NotFoundError } from './errors/not-found-error';
-import errorHandler from './middlewares/error-handler';
+import { NotFoundError } from './errors/NotFoundError';
+import errorHandler from './middlewares/errorHandler';
 import authRoutes from './routes/auth';
 
 const port = process.env.PORT || 8080;
