@@ -6,7 +6,7 @@ import generateToken from '../utils/generateToken';
 
 export const signIn = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { email, password: enteredPassword } = req.body;
 
     const user = await prisma.user.findUnique({
       where: {
@@ -18,13 +18,13 @@ export const signIn = async (req: Request, res: Response) => {
       throw new BadRequestError('Invalid credentials');
     }
 
-    const passwordMatch = await Password.compare(user.password, password);
+    const passwordMatch = await Password.compare(user.password, enteredPassword);
 
     if (!passwordMatch) {
       throw new BadRequestError('Invalid credentials');
     }
 
-    const { password, ...newUser } = user;
+    const { password, createdAt, updatedAt, ...newUser } = user;
 
     const token = generateToken(user);
 

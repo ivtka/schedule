@@ -1,12 +1,12 @@
 import prisma from '../client';
 import { Request, Response } from 'express';
 import { Password } from '../utils/password';
-import { BadRequestError } from '../errors/bad-request-error';
+import { BadRequestError } from '../errors/BadRequestError';
 import generateToken from '../utils/generateToken';
 
 export const signUp = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { email, password: enteredPassword } = req.body;
 
     const userExists = await prisma.user.findUnique({
       where: {
@@ -21,11 +21,11 @@ export const signUp = async (req: Request, res: Response) => {
     const user = await prisma.user.create({
       data: {
         email,
-        password: await Password.hash(password)
+        password: await Password.toHash(enteredPassword)
       }
     });
 
-    const { password, ...newUser } = user;
+    const { password, createdAt, updatedAt, ...newUser } = user;
 
     const token = generateToken(user);
 
