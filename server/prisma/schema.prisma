@@ -17,3 +17,29 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+enum DayType {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model Event {
+  id    String   @id @default(uuid())
+  name  String
+  day   DayType
+  date  DateTime
+  Day   Day?     @relation(fields: [dayId], references: [id])
+  dayId String?
+}
+
+model Day {
+  id     String   @id @default(uuid())
+  day    DayType
+  date   DateTime
+  events Event[]
+}
