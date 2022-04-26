@@ -24,14 +24,12 @@ enum DayType {
   WEDNESDAY
   THURSDAY
   FRIDAY
-  SATURDAY
-  SUNDAY
 }
 
 model Event {
   id    String   @id @default(uuid())
   name  String
-  day   DayType
+  day   DayType  @default(MONDAY)
   date  DateTime
   Day   Day?     @relation(fields: [dayId], references: [id])
   dayId String?
