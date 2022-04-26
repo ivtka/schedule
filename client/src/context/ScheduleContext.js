@@ -7,21 +7,17 @@ export default function ScheduleProivder({ children }) {
   const initialState = {
     date: new Date(),
     days: [],
-    _class: null
+    events: null
   }
 
   const [state, dispatch] = useReducer(ScheduleReducer, initialState)
 
   const setDate = async (date) => {
-    const params = new URLSearchParams({
-      action: 'SET_DATE',
-    })
-
-    const response = await fetch(`${process.env.REACT_APP_SCHEDULE}?${params}`, {
+    const response = await fetch(`${process.env.REACT_APP_SCHEDULE}/event`, {
       method: 'GET'
     })
 
-    const days = response.json()
+    const days = await response.json()
 
     dispatch({
       type: "SET_DATE",
@@ -29,24 +25,24 @@ export default function ScheduleProivder({ children }) {
     })
   }
 
-  const setClass = (_class) => {
+  const setClass = (event) => {
     dispatch({
-      type: "SET_CLASS",
-      payload: _class
+      type: "SET_EVENT",
+      payload: event
     })
   }
 
-  const saveClass = (_class) => {
+  const saveClass = (event) => {
     dispatch({
-      type: "SAVE_CLASS",
-      payload: _class
+      type: "SAVE_EVENT",
+      payload: event
     })
   }
 
-  const deleteClass = (classId) => {
+  const deleteClass = (eventID) => {
     dispatch({
-      type: "DELETE_CLASS",
-      payload: classId
+      type: "DELETE_EVENT",
+      payload: eventID
     })
   }
 

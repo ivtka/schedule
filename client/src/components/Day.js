@@ -1,25 +1,18 @@
 import React, { useContext } from 'react'
 import { ScheduleContext } from '../context/ScheduleContext'
-import Class from './Class'
+import Event from './Event'
 
-const Day = ({ day, date }) => {
-  const { setClass, setDate } = useContext(ScheduleContext)
-
-  const selected = day === date;
-  const style = (selected ? 'selected-day' : '')
+const Day = ({data}) => {
+  const { setEvent } = useContext(ScheduleContext)
 
   return (
-    <div className={`day ${style}`} onClick={() => setDate(day.date)}>
-      <div className="class-day">
-        <div className="classes">
-          {day.tasks.map(_class => (
-            <Class key={_class.id} _class={_class} />
-          ))}
-
+    <div className={`day`}>
+      <div className="task-day">
+        <div className="tasks">
+          { data.map(day => <Event key={day.name} event={day}/>) }
         </div>
-        <h3> {day} </h3>
       </div>
-      {selected ? <div className="button button-blue add-button" onClick={() => setClass({})}>+</div> : null}
+      <div className="button button-blue add-button" onClick={() => setEvent({})}>+</div>
     </div>
   )
 }
