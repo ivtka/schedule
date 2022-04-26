@@ -13,11 +13,8 @@ const AuthProvider = ({ children }) => {
 
   const signin = async (data) => {
     setLoading('Будь ласка, зачекайте...')
-    const params = new URLSearchParams({
-      action: 'LOGIN'
-    })
 
-    const response = await fetch(`${process.env.REACT_APP_AUTH}?${params}`,
+    const response = await fetch(`${process.env.REACT_APP_AUTH}/signin`,
       {
         method: 'POST',
         body: JSON.stringify(data)
@@ -27,17 +24,14 @@ const AuthProvider = ({ children }) => {
 
     dispatch({
       type: 'LOGIN',
-      payload: data
+      payload: result
     })
   }
 
   const signup = async (data) => {
     setLoading('Будь ласка, зачекайте...')
-    const params = new URLSearchParams({
-      action: 'REGISTER'
-    })
 
-    const response = await fetch(`${process.env.REACT_APP_AUTH}?${params}`,
+    const response = await fetch(`${process.env.REACT_APP_AUTH}/signup`,
     {
       method: 'POST',
       body: JSON.stringify(data)
@@ -46,7 +40,7 @@ const AuthProvider = ({ children }) => {
     const result = await response.json()
     dispatch({
       type: 'REGISTER',
-      payload: data
+      payload: result
     })
   }
 

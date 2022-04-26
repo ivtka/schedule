@@ -4,7 +4,7 @@ import AuthProvider from './context/AuthContext'
 
 function App() {
   return (
-    <div className='calendar'>
+    <div className='container'>
       <AuthProvider>
         <ScheduleProvider>
           <Schedule />

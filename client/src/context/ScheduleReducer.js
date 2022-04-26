@@ -21,8 +21,6 @@ export default function ScheduleReducer(state, action) {
     case 'SAVE_CLASS':
       const _class = action.payload
 
-      // fetch
-
       return {
         ...state
       }
