@@ -1,13 +1,10 @@
 export default function ScheduleReducer(state, action) {
   switch (action.type) {
     case 'SET_DATE':
-      const date = action.payload
+      const { date, days } = action.payload
 
       const d1 = new Date(date.getFullYear(), date.getMonth(), 1);
       d1.setDate(d1.getDate() - (d1.getDay() === 0 ? 7 : d1.getDay()));
-      
-      const days = []
-      // fetch
 
       return {
         ...state,

@@ -3,7 +3,7 @@ import ScheduleReducer from "./ScheduleReducer";
 
 export const ScheduleContext = createContext()
 
-export default function ScheduleProivder({children}) {
+export default function ScheduleProivder({ children }) {
   const initialState = {
     date: new Date(),
     days: [],
@@ -12,10 +12,20 @@ export default function ScheduleProivder({children}) {
 
   const [state, dispatch] = useReducer(ScheduleReducer, initialState)
 
-  const setDate = (date) => {
+  const setDate = async (date) => {
+    const params = new URLSearchParams({
+      action: 'SET_DATE',
+    })
+
+    const response = await fetch(`${process.env.REACT_APP_SCHEDULE}?${params}`, {
+      method: 'GET'
+    })
+
+    const days = response.json()
+
     dispatch({
       type: "SET_DATE",
-      payload: date
+      payload: { date, days }
     })
   }
 
@@ -39,13 +49,13 @@ export default function ScheduleProivder({children}) {
       payload: classId
     })
   }
-  
+
   return (
     <ScheduleContext.Provider value={{
       date: state.date,
       days: state.days,
       _class: state._class,
-      
+
       setDate,
       setClass,
       saveClass,
